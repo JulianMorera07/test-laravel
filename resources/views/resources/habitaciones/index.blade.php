@@ -20,30 +20,15 @@
             @foreach($rooms as $room)
                 <tr>
                     <td>{{$room->id}}</td>
-                    <td>name</td>
+                    @foreach($hotels as $hotel)
+                        @if( $hotel->id == $room->hotel_id)
+                            <td>{{$hotel->name}}</td>
+                        @endif
+                    @endforeach
                     <td>{{$room->quantity}}</td>
                     <td>{{ucfirst($room->type)}}</td>
                     <td>{{$room->accommodation}}</td>
                     <td>{{$room->created_at}}</td>
-                    {{--<td>
-                           <div class="row">
-                               <div class="col-md-1">
-                                   <a class=""
-                                      href="{{ route('products.edit', $product) }}">
-                                       <i class="bi bi-pencil-fill"></i>
-                                   </a>
-                               </div>
-                               <div class="col-md-1">
-                                   <form action="{{ route('products.destroy', $product) }}" method="POST">
-                                       @csrf
-                                       @method('DELETE')
-                                       <button type="submit" style="border: none; background-color: white">
-                                           <i class="bi bi-trash-fill"></i>
-                                       </button>
-                                   </form>
-                               </div>
-                           </div>
-                       </td>--}}
                 </tr>
             @endforeach
             </tbody>

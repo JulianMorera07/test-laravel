@@ -15,7 +15,8 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        return view('resources.habitaciones.index', compact('rooms'));
+        $hotels = Hotel::with('hotels')->get();
+        return view('resources.habitaciones.index', compact('rooms', 'hotels'));
     }
 
     /**
@@ -33,7 +34,7 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {
         $room = Hotel::where('id', $request->toArray()['hotel_id'])->get();
-        if ($room->toArray()[0]['room'] > $request->toArray()['quantity']){
+        if ($room->toArray()[0]['room'] >= $request->toArray()['quantity']){
             Hotel::where('id', $request->toArray()['hotel_id'])->update(array('room' => $room->toArray()[0]['room'] - $request->toArray()['quantity']));
             Room::create($request->toArray());
             alert()->success('Asigando', 'Se asignaron las habitaciones correctamente');
